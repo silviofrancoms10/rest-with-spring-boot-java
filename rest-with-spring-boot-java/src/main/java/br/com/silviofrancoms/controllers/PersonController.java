@@ -1,12 +1,13 @@
 package br.com.silviofrancoms.controllers;
 
-import br.com.silviofrancoms.PersonService;
+import br.com.silviofrancoms.service.PersonService;
 import br.com.silviofrancoms.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/person")
@@ -27,7 +28,7 @@ public class PersonController {
             method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person findById(@PathVariable("id") String id) {
+    public Person findById(@PathVariable("id") Long id) {
         return service.findById(id);
     }
 
@@ -44,14 +45,14 @@ public class PersonController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person update(@PathVariable("id") String id, @RequestBody Person person) {
+    public Person update(@PathVariable("id") Long id, @RequestBody Person person) {
         return service.update(id, person);
     }
 
     @RequestMapping(value = "/{id}",
             method = RequestMethod.DELETE
     )
-    public void delete(@PathVariable("id") String id) {
+    public void delete(@PathVariable("id") Long id) {
         service.delete(id);
     }
 
