@@ -1,13 +1,12 @@
 package br.com.silviofrancoms.controllers;
 
-import br.com.silviofrancoms.service.PersonService;
 import br.com.silviofrancoms.model.Person;
+import br.com.silviofrancoms.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/person")
