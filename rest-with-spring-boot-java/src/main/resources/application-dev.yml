@@ -18,3 +18,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+logging:
+  level:
+    br.com.silviofrancoms: DEBUG
+    root: warn
+#    root: warn // esse aqui serve para logar no root só niveis warn ou error
+# Logs level Trace > Debug > Info > Warn > Error // por padrao o projeto começa com info

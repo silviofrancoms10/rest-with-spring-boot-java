@@ -3,16 +3,16 @@ package br.com.silviofrancoms.service;
 import br.com.silviofrancoms.exception.ResourceNotFoundException;
 import br.com.silviofrancoms.model.Person;
 import br.com.silviofrancoms.repository.PersonRepository;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class PersonService {
 
-    private final Logger logger = Logger.getLogger(PersonService.class.getName());
+    private final org.slf4j.Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
 
     @Autowired
     PersonRepository repository;
