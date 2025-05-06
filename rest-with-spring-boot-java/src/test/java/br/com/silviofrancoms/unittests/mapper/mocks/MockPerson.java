@@ -1,6 +1,6 @@
 package br.com.silviofrancoms.unittests.mapper.mocks;
 
-import br.com.silviofrancoms.data.dto.PersonDTO;
+import br.com.silviofrancoms.data.dto.v1.PersonDTO;
 import br.com.silviofrancoms.model.Person;
 
 import java.util.ArrayList;

@@ -1,7 +1,9 @@
 package br.com.silviofrancoms.service;
 
-import br.com.silviofrancoms.data.dto.PersonDTO;
+import br.com.silviofrancoms.data.dto.v1.PersonDTO;
+import br.com.silviofrancoms.data.dto.v2.PersonDTOV2;
 import br.com.silviofrancoms.exception.ResourceNotFoundException;
+import br.com.silviofrancoms.mapper.custom.PersonMapper;
 import br.com.silviofrancoms.model.Person;
 import br.com.silviofrancoms.repository.PersonRepository;
 import org.slf4j.LoggerFactory;
@@ -21,6 +23,9 @@ public class PersonService {
     @Autowired
     PersonRepository repository;
 
+    @Autowired
+    PersonMapper converter;
+
     public List<PersonDTO> findAll() {
         logger.info("Finding all People!");
         return parseListObjects(repository.findAll(), PersonDTO.class);
@@ -37,6 +42,12 @@ public class PersonService {
         logger.info("Creating one Person!");
         var entity = parseObject(person, Person.class);
         return parseObject(repository.save(entity), PersonDTO.class);
+    }
+
+    public PersonDTOV2 createV2(PersonDTOV2 person) {
+        logger.info("Creating one Person!");
+        var entity = converter.convertDTOToEntity(person);
+        return converter.convertEntityToDTO(repository.save(entity));
     }
 
     public PersonDTO update(Long id, PersonDTO person) {
