@@ -1,26 +1,35 @@
 package br.com.silviofrancoms.data.dto.v1;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+//import com.fasterxml.jackson.annotation.JsonIgnore;
+//import com.fasterxml.jackson.annotation.JsonProperty;
+//import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import br.com.silviofrancoms.serializer.GenderSerializer;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"}) //definir a ordem da serialização
+//@JsonPropertyOrder({"id", "first_name", "last_name", "address", "gender"}) //definir a ordem da serialização
 public class PersonDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
 
-    @JsonProperty("first_name") //mudar o nome na serialização
+//    @JsonProperty("first_name") //mudar o nome na serialização
     private String firstName;
 
-    @JsonProperty("last_name") //mudar o nome na serialização
+//    @JsonProperty("last_name") //mudar o nome na serialização
     private String lastName;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Date birthDay;
     private String address;
 
-    @JsonIgnore //não exibir na serialização
+//    @JsonIgnore //não exibir na serialização
+    @JsonSerialize(using = GenderSerializer.class)
     private String gender;
 
     public PersonDTO() {
@@ -66,14 +75,23 @@ public class PersonDTO implements Serializable {
         this.gender = gender;
     }
 
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PersonDTO person)) return false;
-        return Objects.equals(getId(), person.getId()) && Objects.equals(getFirstName(), person.getFirstName()) && Objects.equals(getLastName(), person.getLastName()) && Objects.equals(getAddress(), person.getAddress()) && Objects.equals(getGender(), person.getGender());
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonDTO personDTO = (PersonDTO) o;
+        return Objects.equals(getId(), personDTO.getId()) && Objects.equals(getFirstName(), personDTO.getFirstName()) && Objects.equals(getLastName(), personDTO.getLastName()) && Objects.equals(getBirthDay(), personDTO.getBirthDay()) && Objects.equals(getAddress(), personDTO.getAddress()) && Objects.equals(getGender(), personDTO.getGender());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getAddress(), getGender());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getBirthDay(), getAddress(), getGender());
     }
 }
