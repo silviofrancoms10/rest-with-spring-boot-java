@@ -1,17 +1,20 @@
 package br.com.silviofrancoms.service;
 
+import br.com.silviofrancoms.controllers.PersonController;
 import br.com.silviofrancoms.data.dto.PersonDTO;
 import br.com.silviofrancoms.exception.ResourceNotFoundException;
 import br.com.silviofrancoms.model.Person;
 import br.com.silviofrancoms.repository.PersonRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static br.com.silviofrancoms.mapper.ObjectMapper.parseListObjects;
 import static br.com.silviofrancoms.mapper.ObjectMapper.parseObject;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Service
 public class PersonService {
@@ -30,7 +33,9 @@ public class PersonService {
         logger.info("Finding one Person! ");
         var entity =repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
-        return parseObject(entity, PersonDTO.class);
+        var dto =  parseObject(entity, PersonDTO.class);
+        dto.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel().withType("GET"));
+        return dto;
     }
 
     public PersonDTO create(PersonDTO person) {
