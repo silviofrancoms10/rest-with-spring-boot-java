@@ -2,6 +2,7 @@ package br.com.silviofrancoms.service;
 
 import br.com.silviofrancoms.controllers.PersonController;
 import br.com.silviofrancoms.data.dto.PersonDTO;
+import br.com.silviofrancoms.exception.RequiredObjectIsNullException;
 import br.com.silviofrancoms.exception.ResourceNotFoundException;
 import br.com.silviofrancoms.model.Person;
 import br.com.silviofrancoms.repository.PersonRepository;
@@ -42,6 +43,7 @@ public class PersonService {
     }
 
     public PersonDTO create(PersonDTO person) {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Creating one Person!");
         var entity = parseObject(person, Person.class);
         var dto = parseObject(repository.save(entity), PersonDTO.class);
@@ -50,6 +52,7 @@ public class PersonService {
     }
 
     public PersonDTO update(Long id, PersonDTO person) {
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("Replacing one Person!");
         Person entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
         entity.setFirstName(person.getFirstName());
